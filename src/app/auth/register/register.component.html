@@ -59,6 +59,7 @@
 
                         <p *ngIf="noValid('name')">* El nombre es obligatorio</p>
                         <p *ngIf="noValid('email')">* El email es obligatorio y tiene que ser válido</p>
+                        <p *ngIf="passwordsInvalid()">* Las contraseñas deben de ser válidas</p>
                         <p *ngIf="acceptTerms()">* Debe aceptar los términos de uso</p>
 
                     </div>
