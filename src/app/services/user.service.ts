@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 import { environment } from 'src/environments/environment';
 
 import { RegisterForm } from '../interfaces/register-form.interface';
 import { LoginForm } from '../interfaces/login.interface';
-import { Observable, of } from 'rxjs';
 
 const url = environment.baseUrl;
 
@@ -15,7 +16,12 @@ const url = environment.baseUrl;
 })
 export class UserService {
 
-  constructor( private http: HttpClient ) { }
+  constructor( private http: HttpClient, private router: Router ) { }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigateByUrl('/login');
+  }
 
   tokenValid(): Observable<boolean> {
 
