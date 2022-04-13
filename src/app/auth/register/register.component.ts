@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
+
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -36,7 +38,9 @@ export class RegisterComponent {
       console.log('User created');
       console.log(data);
       
-    }, (err) => console.warn( err.error ))
+    }, (err) => {
+      Swal.fire('Error', err.error.msg, 'error')
+    })
   }
 
   noValid( space: string ): boolean {
