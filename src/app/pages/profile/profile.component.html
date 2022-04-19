@@ -52,14 +52,20 @@
                 <h4 class="card-title">Profile</h4>
                 <h6 class="card-subtitle">Configuration</h6>
 
-                <img src="">
+                <div class="text-center">
+                    <img *ngIf="!imgTemp" [src]="user.imgUrl" class="img-avatar">
+                    <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
+                </div>
 
-                <input type="file">
+                <input type="file" (change)="changeImage($event)">
 
                 <br>
                 <br>
 
-                <button type="button" class="btn btn-success btn-block waves-effect waves-light m-r-10">
+                <button type="button"
+                        class="btn btn-success btn-block waves-effect waves-light m-r-10"
+                        [disabled]="!imageUp"
+                        (click)="uploadImage()">
                     <i class="fa fa-save"></i>
                     Change image
                 </button>

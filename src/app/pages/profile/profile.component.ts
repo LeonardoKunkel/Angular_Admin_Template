@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
+
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { FileUploadService } from 'src/app/services/file-upload.service';
 
 @Component({
   selector: 'app-profile',
@@ -13,8 +16,14 @@ export class ProfileComponent implements OnInit {
 
   public profileForm!: FormGroup;
   public user!: User;
+  public imageUp!: File;
+  public imgTemp: any = null;
 
-  constructor( private fb: FormBuilder, private userService: UserService ) {
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private fileUpService: FileUploadService
+  ) {
 
     this.user = userService.user;
 
@@ -37,7 +46,34 @@ export class ProfileComponent implements OnInit {
           const { name, email } = this.profileForm.value;
           this.user.name = name;
           this.user.email = email;
+        }, (err) => {
+          Swal.fire('Error', err.error.errors.role.msg, 'error')
         })
+
+  }
+
+  changeImage(evt: any): any {
+
+    const file: File = evt.target.files[0];
+    this.imageUp = file;
+
+    if(!file) {
+      return this.imgTemp = null;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL( file );
+
+    reader.onloadend = () => {
+      this.imgTemp = reader.result?.toString();
+    }
+    
+  }
+
+  uploadImage() {
+
+    this.fileUpService.updatePhoto( this.imageUp, 'users', this.user.uid! )
+        .then( img => this.user.img = img );
 
   }
 
