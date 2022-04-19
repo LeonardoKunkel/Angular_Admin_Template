@@ -46,8 +46,11 @@ export class ProfileComponent implements OnInit {
           const { name, email } = this.profileForm.value;
           this.user.name = name;
           this.user.email = email;
+
+          Swal.fire('Saved', 'Changes saved', 'success');
         }, (err) => {
-          Swal.fire('Error', err.error.errors.role.msg, 'error')
+          console.log(err.error.msg);
+          Swal.fire('Error', err.error.msg, 'error')
         })
 
   }
@@ -73,7 +76,13 @@ export class ProfileComponent implements OnInit {
   uploadImage() {
 
     this.fileUpService.updatePhoto( this.imageUp, 'users', this.user.uid! )
-        .then( img => this.user.img = img );
+        .then( img => {
+          this.user.img = img;
+          Swal.fire('Saved', 'Image updated!', 'success');
+        }).catch( err => {
+          console.log(err);
+          Swal.fire('Error', err.error.msg, 'error');
+        });
 
   }
 
