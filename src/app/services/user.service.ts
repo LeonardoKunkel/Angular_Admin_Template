@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 
 import { RegisterForm } from '../interfaces/register-form.interface';
 import { LoginForm } from '../interfaces/login.interface';
+import { User } from '../models/user.model';
 
 const url = environment.baseUrl;
 
@@ -16,6 +17,8 @@ const url = environment.baseUrl;
 })
 export class UserService {
 
+  public user!: User;
+
   constructor( private http: HttpClient, private router: Router ) { }
 
   logout() {
@@ -23,21 +26,56 @@ export class UserService {
     this.router.navigateByUrl('/login');
   }
 
-  tokenValid(): Observable<boolean> {
+  get token(): string {
+    return localStorage.getItem('token') || '';
+  }
 
-    const token = localStorage.getItem('token') || '';
+  get uid(): string {
+
+    return this.user.uid || '';
+
+  }
+
+  tokenValid(): Observable<boolean> {
 
     return this.http.get(`${ url }/login/renew`, {
       headers: {
-        'x-token': token
+        'x-token': this.token
       }
     }).pipe(
-      tap( (data: any) => {
-        localStorage.setItem('token', data.token)
+      map( (data: any) => {
+        console.log(data);
+        const {
+          email,
+          google,
+          name,
+          role,
+          img,
+          uid
+        } = data.user;
+
+        this.user = new User( name, email, '', img, google, role, uid );
+        
+        localStorage.setItem('token', data.token);
+        return true
       }),
-      map( data => true),
       catchError( error => of(false) )
     )
+
+  }
+
+  updateUser( data: {email: string, name: string, role: string} ) {
+
+    data = {
+      ...data,
+      role: this.user.role!
+    };
+
+    return this.http.put(`${ url }/users/${ this.uid }`, data, {
+      headers: {
+      'x-token': this.token
+      }
+    });
 
   }
 
