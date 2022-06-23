@@ -115,7 +115,7 @@ export class UserService {
 
     return this.http.get<LoadUser>( url2, this.headers)
                 .pipe(
-                  delay(3000),
+                  delay(1000),
                   map( data => {
                     const users = data.users.map(
                       usr => new User(usr.name, usr.email, '', usr.img, usr.google, usr.role, usr.uid)
@@ -126,6 +126,13 @@ export class UserService {
                     };
                   })
                 );
+
+  }
+
+  deleteUser(user: User) {
+
+    const url2 = `${url}/users/delete/${user.uid}`;
+    return this.http.delete( url2, this.headers );
 
   }
 
