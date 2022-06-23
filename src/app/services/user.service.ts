@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
+
+import { catchError, delay, map, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
 import { RegisterForm } from '../interfaces/register-form.interface';
 import { LoginForm } from '../interfaces/login.interface';
 import { User } from '../models/user.model';
+import { LoadUser } from '../interfaces/load-users.interface';
 
 const url = environment.baseUrl;
 
@@ -34,6 +36,14 @@ export class UserService {
 
     return this.user.uid || '';
 
+  }
+
+  get headers() {
+    return {
+      headers: {
+        'x-token': this.token
+      }
+    }
   }
 
   tokenValid(): Observable<boolean> {
@@ -97,6 +107,26 @@ export class UserService {
                     localStorage.setItem('token', data.token)
                   })
                 )
+  }
+
+  loadUser( from: number = 0 ) {
+
+    const url2 = `${ url }/users?from=${ from }`;
+
+    return this.http.get<LoadUser>( url2, this.headers)
+                .pipe(
+                  delay(3000),
+                  map( data => {
+                    const users = data.users.map(
+                      usr => new User(usr.name, usr.email, '', usr.img, usr.google, usr.role, usr.uid)
+                    )
+                    return {
+                      totalUsers: data.totalUsers,
+                      users
+                    };
+                  })
+                );
+
   }
 
 }

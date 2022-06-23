@@ -15,7 +15,12 @@ export class User {
     ) {}
 
     get imgUrl() {
-        if (this.img) {
+
+        if ( !this.img ) {
+            return `${ apiUrl }/upload/users/no-image`;
+        } else if ( this.img?.includes('https') ) {
+            return this.img;
+        } else if (this.img) {
             return `${ apiUrl }/upload/users/${ this.img }`;
         } else {
             return `${ apiUrl }/upload/users/no-image`;

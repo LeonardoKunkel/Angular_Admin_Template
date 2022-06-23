@@ -9,3 +9,13 @@
     width: 200px;
     height: auto;
 }
+
+.w100 {
+    width: 100px;
+}
+
+.avatar {
+    border-radius: 100%;
+    width: 75px;
+    height: 75px;
+}
