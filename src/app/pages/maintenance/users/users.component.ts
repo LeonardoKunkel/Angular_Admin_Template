@@ -71,6 +71,14 @@ export class UsersComponent implements OnInit {
 
   deleteUser(user: User) {
 
+    if ( user.uid === this.userService.uid ) {
+      return Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No se puede borrar a si mismo'
+      })
+    }
+
     Swal.fire({
       title: '¿Borrar usuario?',
       text: `Está a punto de borrar a ${ user.name }`,
@@ -94,6 +102,8 @@ export class UsersComponent implements OnInit {
         });
       }
     })
+
+    return;
 
   }
 
