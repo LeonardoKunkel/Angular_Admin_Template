@@ -23,3 +23,17 @@
     width: 75px;
     height: 75px;
 }
+
+.fondo-modal {
+    background-color: rgba(0, 0, 0, 0.4);
+    height: 100%;
+    left: 0px;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 9999;
+}
+
+.hide {
+    display: none;
+}
