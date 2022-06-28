@@ -81,11 +81,7 @@ export class UserService {
       role: this.user.role!
     };
 
-    return this.http.put(`${ url }/users/${ this.uid }`, data, {
-      headers: {
-      'x-token': this.token
-      }
-    });
+    return this.http.put(`${ url }/users/${ this.uid }`, data, this.headers);
 
   }
 
@@ -133,6 +129,12 @@ export class UserService {
 
     const url2 = `${url}/users/delete/${user.uid}`;
     return this.http.delete( url2, this.headers );
+
+  }
+
+  saveUser( user: User ) {
+
+    return this.http.put(`${ url }/users/${ user.uid }`, user, this.headers);
 
   }
 
