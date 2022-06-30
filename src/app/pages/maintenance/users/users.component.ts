@@ -39,7 +39,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
     this.loadUsers();
 
-    this.imgSubs = this.modalService.newImage.subscribe( img => this.loadUsers())
+    this.imgSubs = this.modalService.newImage.subscribe( img => this.loadUsers());
 
   }
 

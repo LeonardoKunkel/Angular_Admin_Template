@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Hospital } from 'src/app/models/hospital.model';
+import { ModalImageService } from 'src/app/services/modal-image.service';
+import Swal from 'sweetalert2';
 import { HospitalService } from '../../../services/hospital.service';
 
 @Component({
@@ -12,12 +15,15 @@ export class HospitalsComponent implements OnInit {
 
   public hospitals: Hospital[] = [];
   public loading: boolean = true;
+  private imgSubs!: Subscription;
 
-  constructor( private hospitalServ: HospitalService ) { }
+  constructor( private hospitalServ: HospitalService, private modalImgServ: ModalImageService  ) { }
 
   ngOnInit(): void {
 
-    this.loadHospitals()
+    this.loadHospitals();
+
+    this.imgSubs = this.modalImgServ.newImage.subscribe( img => this.loadHospitals())
     
   }
 
@@ -29,6 +35,48 @@ export class HospitalsComponent implements OnInit {
       this.loading = false;
       this.hospitals = hosp;
     })
+
+  }
+
+  saveChanges( hospital: Hospital ) {
+
+    this.hospitalServ.updateHospital( hospital._id, hospital.name )
+        .subscribe( resp => {
+          Swal.fire('Updated!', hospital.name, 'success' );
+        })
+
+  }
+
+  deleteHospital( hospital: Hospital ) {
+
+    this.hospitalServ.deleteHospital( hospital._id )
+        .subscribe( resp => {
+          this.loadHospitals();
+          Swal.fire('Deleted!', hospital.name, 'success' );
+        })
+
+  }
+
+  async openAlert() {
+    const { value } = await Swal.fire<string>({
+      title: 'Add Hospital',
+      text: 'Add the name of a new hospital.',
+      input: 'text',
+      inputPlaceholder: 'Name of the Hospital',
+      showCancelButton: true
+    })
+    
+    if( value!.trim().length > 0 ) {
+      this.hospitalServ.createHospital( value ).subscribe( (resp: any) => {
+        console.log(resp);
+        this.hospitals.push( resp.newHospital )
+      })
+    }
+  }
+
+  openModal( hospital: Hospital ) {
+
+    this.modalImgServ.openModal( 'hospitals', hospital._id, hospital.img );
 
   }
 

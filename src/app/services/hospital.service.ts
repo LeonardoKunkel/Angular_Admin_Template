@@ -36,7 +36,7 @@ export class HospitalService {
 
   }
 
-  createHospital( name: string ) {
+  createHospital( name?: string ) {
 
     const url = `${ base_url }/hospital/create`;
 
@@ -44,7 +44,7 @@ export class HospitalService {
 
   }
 
-  updateHospital( _id: string, name: string ) {
+  updateHospital( name?: string, _id?: string ) {
 
     const url = `${ base_url }/hospital/${ _id }`;
 
@@ -52,7 +52,7 @@ export class HospitalService {
 
   }
 
-  deleteHospital( _id: string ) {
+  deleteHospital( _id?: string ) {
 
     const url = `${ base_url }/hospital/${ _id }`;
 
