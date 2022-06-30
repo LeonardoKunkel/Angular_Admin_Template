@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Hospital } from 'src/app/models/hospital.model';
-import { ModalImageService } from 'src/app/services/modal-image.service';
 import Swal from 'sweetalert2';
+
+import { Hospital } from 'src/app/models/hospital.model';
+
+import { ModalImageService } from 'src/app/services/modal-image.service';
+import { SearchService } from 'src/app/services/search.service';
 import { HospitalService } from '../../../services/hospital.service';
 
 @Component({
@@ -17,7 +20,13 @@ export class HospitalsComponent implements OnInit {
   public loading: boolean = true;
   private imgSubs!: Subscription;
 
-  constructor( private hospitalServ: HospitalService, private modalImgServ: ModalImageService  ) { }
+  public hospsTemp: Hospital[] = [];
+
+  constructor(
+    private hospitalServ: HospitalService,
+    private modalImgServ: ModalImageService,
+    private searchServ: SearchService  
+  ) { }
 
   ngOnInit(): void {
 
@@ -58,7 +67,7 @@ export class HospitalsComponent implements OnInit {
   }
 
   async openAlert() {
-    const { value } = await Swal.fire<string>({
+    const { value = '' } = await Swal.fire<string>({
       title: 'Add Hospital',
       text: 'Add the name of a new hospital.',
       input: 'text',
@@ -77,6 +86,21 @@ export class HospitalsComponent implements OnInit {
   openModal( hospital: Hospital ) {
 
     this.modalImgServ.openModal( 'hospitals', hospital._id, hospital.img );
+
+  }
+
+  search( term: string ) {
+    if ( term.length === 0 ) {
+      return this.loadHospitals();
+    }
+
+    this.searchServ.search( 'hospitals', term ).subscribe( results => {
+
+      this.hospitals = results as Hospital[];
+
+    });
+
+    return;
 
   }
 

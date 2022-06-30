@@ -6,7 +6,9 @@
 
                 <input type="text"
                        class="form-control"
-                       placeholder="Search hospital...">
+                       placeholder="Search hospital..."
+                       (keyup)="search( txtSearch.value )"
+                       #txtSearch>
 
             </div>
         </div>
