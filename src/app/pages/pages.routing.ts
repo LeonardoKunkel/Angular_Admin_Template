@@ -37,7 +37,7 @@ const routes: Routes = [
             { path: 'users', component: UsersComponent, data: { titulo: 'App User' } },
             { path: 'hospitals', component: HospitalsComponent, data: { titulo: 'App Hospital' } },
             { path: 'medics', component: MedicsComponent, data: { titulo: 'App Medic' } },
-            { path: 'medics/:id', component: MedicComponent, data: { titulo: 'App Medic' } }
+            { path: 'medic/:id', component: MedicComponent, data: { titulo: 'App Medic' } }
         ]
     }
 ];

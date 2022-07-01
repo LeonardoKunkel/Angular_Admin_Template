@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 
 import { User } from '../models/user.model';
 import { Hospital } from '../models/hospital.model';
+import { Medic } from '../models/medic.model';
 
 const url = environment.baseUrl;
 
@@ -41,6 +42,12 @@ export class SearchService {
 
   }
 
+  private transformMedics( results: any[] ): Medic[] {
+
+    return results;
+
+  }
+
   search( type: 'users' | 'hospitals' | 'medics', term: string ) {
     const url2 = `${ url }/all/collection/${ type }/${ term }`;
 
@@ -54,6 +61,9 @@ export class SearchService {
 
                 case 'hospitals':
                   return this.transformHospitals(data.results)
+
+                case 'medics':
+                  return this.transformMedics(data.results)
               
                 default:
                   return [];

@@ -6,7 +6,9 @@
 
                 <input type="text"
                        class="form-control"
-                       placeholder="Search user...">
+                       placeholder="Search user..."
+                       #txtSearch
+                       (keyup)="search( txtSearch.value )">
 
             </div>
         </div>
@@ -33,15 +35,15 @@
 
                 <div class="row">
                     <div class="col-8">
-                        <h4 class="card-title">Medics</h4>
+                        <h4 class="card-title">Medics ({{ medics.length }})</h4>
                         <h6 class="card-subtitle">Registered Medics</h6>
                     </div>
                     <div class="col-4">
                         <div class="text-right">
-                            <button class="btn btn-primary">
+                            <a class="btn btn-primary" routerLink="/dashboard/medic/new">
                                 <i class="fa fa-hospital-o"></i>
                                 New Medic
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -68,7 +70,7 @@
                                 </td>
     
                                 <td class="text-nowrap text-center">
-                                    <a href="#"
+                                    <a [routerLink]="['/dashboard/medic', medic._id]"
                                         data-toggle="tooltip"
                                         class="cursor"
                                         data-original-title="Edit"> 
