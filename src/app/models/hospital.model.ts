@@ -29,6 +29,6 @@ export interface Hospitals {
 
     _id: string;
     name: string;
-    user: _HospitalUser
+    user: _HospitalUser;
 
 }

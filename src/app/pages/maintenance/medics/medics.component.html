@@ -13,7 +13,8 @@
     </div>
 </div>
 
-<div class="row animated fadeIn fast">
+<div class="row animated fadeIn fast"
+     *ngIf="loading">
     <div class="col-12">
 
         <div class="alert alert-info text-center">
@@ -25,12 +26,26 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row" *ngIf="!loading">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Users</h4>
-                <h6 class="card-subtitle">Registered Users</h6>
+
+                <div class="row">
+                    <div class="col-8">
+                        <h4 class="card-title">Medics</h4>
+                        <h6 class="card-subtitle">Registered Medics</h6>
+                    </div>
+                    <div class="col-4">
+                        <div class="text-right">
+                            <button class="btn btn-primary">
+                                <i class="fa fa-hospital-o"></i>
+                                New Medic
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
@@ -41,13 +56,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Lunar probe project</td>
-                                <td>Lunar probe project</td>
+                            <tr *ngFor="let medic of medics">
+                                <td class="text-center">
+                                    <img [src]="medic.img | image:'medics'"
+                                        [alt]="medic.name"
+                                        class="avatar cursor"
+                                        (click)="openModal(medic)">
+                                </td>
+                                <td>
+                                    {{ medic.name }} {{ medic.lastname }}
+                                </td>
     
                                 <td class="text-nowrap text-center">
-                                    <a href="#" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                    <a href="#" data-toggle="tooltip" data-original-title="Delete"> <i class="fa fa-close text-danger"></i> </a>
+                                    <a href="#"
+                                        data-toggle="tooltip"
+                                        class="cursor"
+                                        data-original-title="Edit"> 
+                                        <i class="fa fa-pencil text-inverse m-r-10"></i> 
+                                    </a>
+                                    <a href="#"
+                                        data-toggle="tooltip"
+                                        class="cursor"
+                                        data-original-title="Delete"> 
+                                        <i class="fa fa-close text-danger"></i> 
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>

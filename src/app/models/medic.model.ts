@@ -10,6 +10,7 @@ export class Medic {
 
     constructor(
         public name: string,
+        public lastname?: string,
         public _id?: string,
         public img?: string,
         public user?: _MedicUser,
@@ -18,3 +19,20 @@ export class Medic {
 
 }
 
+export interface MedicInterface {
+
+    ok: boolean;
+    msg: string;
+    allMedics: Medics[]
+
+}
+
+export interface Medics {
+
+    _id: string;
+    name: string;
+    lastname: string;
+    user: _MedicUser;
+    hospital: Hospital;
+
+}
