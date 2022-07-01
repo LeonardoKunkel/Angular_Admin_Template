@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
+
 import { Medic } from 'src/app/models/medic.model';
+
 import { MedicService } from 'src/app/services/medic.service';
 import { ModalImageService } from 'src/app/services/modal-image.service';
 import { SearchService } from '../../../services/search.service';
@@ -64,8 +67,32 @@ export class MedicsComponent implements OnInit, OnDestroy {
 
   }
 
-  openAlert() {
-    
+  deleteMedic( medic: Medic ) {
+
+    Swal.fire({
+      title: 'Delete Medic?',
+      text: `You are about to delete ${ medic.name } ${ medic.lastname }`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.medicsServ.deleteMedic(medic._id).subscribe(data => {
+
+          this.loadMedics()
+
+          Swal.fire(
+            'Medic removed',
+            `${ medic.name } ${ medic.lastname } removed correctly`,
+            'success'
+          )
+        });
+      }
+    })
+
   }
 
 }

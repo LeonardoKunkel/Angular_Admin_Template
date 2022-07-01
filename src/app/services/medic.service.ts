@@ -52,7 +52,7 @@ export class MedicService {
 
   }
 
-  deleteHospital( _id?: string ) {
+  deleteMedic( _id?: string ) {
 
     const url = `${ base_url }/medic/${ _id }`;
 

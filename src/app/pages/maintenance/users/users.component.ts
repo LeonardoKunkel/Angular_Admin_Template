@@ -97,13 +97,13 @@ export class UsersComponent implements OnInit, OnDestroy {
     }
 
     Swal.fire({
-      title: '¿Borrar usuario?',
-      text: `Está a punto de borrar a ${ user.name }`,
+      title: 'Delete User?',
+      text: `You are about to delete ${ user.name }`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, borrar!'
+      confirmButtonText: 'Yes, delete!'
     }).then((result) => {
       if (result.isConfirmed) {
 
@@ -112,8 +112,8 @@ export class UsersComponent implements OnInit, OnDestroy {
           this.loadUsers()
 
           Swal.fire(
-            'Usuario Borrado',
-            `${ user.name } fue eliminado correctamente`,
+            'User deleted',
+            `${ user.name } removed correctly`,
             'success'
           )
         });
