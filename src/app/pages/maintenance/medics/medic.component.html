@@ -1,1 +1,91 @@
-<p>medic works!</p>
+<div class="row">
+
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+    
+                <h4 class="card-title">New Medic</h4>
+                <h6 class="card-subtitle">Edit Information</h6>
+    
+                <form class="form-horizontal p-t-20"
+                        [formGroup]="medicForm"
+                        (submit)="saveMedic()">
+    
+    
+    
+                    <div class="form-group row">
+                        <label for="exampleInputuname3" class="col-sm-3 control-label">Photo</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <img class="w100" src="localhost:3005/api/upload/medics/624e2838c31494ab3301f000" alt="" />
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group row">
+                        <label for="exampleInputuname3" class="col-sm-3 control-label">Name</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-user"></i></div>
+                                <input type="text"
+                                        formControlName="name"
+                                        class="form-control"
+                                        id="exampleInputuname3"
+                                        placeholder="Medic's name">
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group row">
+                        <label for="exampleInputuname3" class="col-sm-3 control-label">Lastname</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-user"></i></div>
+                                <input type="text"
+                                        formControlName="lastname"
+                                        class="form-control"
+                                        id="exampleInputuname5"
+                                        placeholder="Medic's lastname">
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group row">
+                        <label for="exampleInputEmail3" class="col-sm-3 control-label">Hospital</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <select class="form-control" formControlName="hospital">
+                                    <option value="">Select Hospital</option>
+                                    <option *ngFor="let hospital of hospitals"
+                                            [value]="hospital._id">{{ hospital.name }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row m-b-0">
+                        <div class="offset-sm-3 col-sm-9">
+                            <button type="submit"
+                                    [disabled]="medicForm.invalid"
+                                    class="btn btn-success waves-effect waves-light">
+                                <i class="fa fa-save"></i>
+                                Save changes
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">Hospital</h4>
+                <h6 class="card-subtitle">Hospital assigned to</h6>
+
+            </div>
+        </div>
+    </div>
+
+</div>
