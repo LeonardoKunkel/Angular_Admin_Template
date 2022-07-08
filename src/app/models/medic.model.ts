@@ -27,6 +27,14 @@ export interface MedicInterface {
 
 }
 
+export interface MedicByIdInterface {
+
+    ok: boolean;
+    msg: string;
+    medic: Medic
+
+}
+
 export interface Medics {
 
     _id: string;

@@ -13,11 +13,11 @@
     
     
     
-                    <div class="form-group row">
+                    <div class="form-group row" *ngIf="medicSelected">
                         <label for="exampleInputuname3" class="col-sm-3 control-label">Photo</label>
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <img class="w100" src="localhost:3005/api/upload/medics/624e2838c31494ab3301f000" alt="" />
+                                <img class="w140" [src]="medicSelected.img | image:'medics'" />
                             </div>
                         </div>
                     </div>
@@ -77,12 +77,14 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 animated fadeIn fast" *ngIf="hospitalSelected">
         <div class="card">
             <div class="card-body">
 
                 <h4 class="card-title">Hospital</h4>
-                <h6 class="card-subtitle">Hospital assigned to</h6>
+                <h6 class="card-subtitle">{{ hospitalSelected?.name }}</h6>
+
+                <img [src]="hospitalSelected?.img | image:'hospitals'" class="img-thumbnail">
 
             </div>
         </div>
