@@ -7,27 +7,27 @@
 
                 <h3>Users</h3>
 
-                <div class="alert alert-info">
+                <div class="alert alert-info animated fadeIn fast" *ngIf="users.length === 0">
                     <p class="mb-0">
                         No users with that term
                     </p>
                 </div>
 
 
-                <div class="table-responsive">
+                <div class="table-responsive" *ngIf="users.length > 0">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>Avatar</th>
                                 <th>Name</th>
-                                <th>Lastname</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Deshmukh</td>
-                                <td>He He</td>
+                            <tr *ngFor="let user of users" class="animated fadeIn">
+                                <td>
+                                    <img [src]="user.img | image:'users'" class="w100" />
+                                </td>
+                                <td>{{ user.name }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -44,27 +44,35 @@
 
                 <h3>Medics</h3>
 
-                <div class="alert alert-info">
+                <div class="alert alert-info animated fadeIn fast" *ngIf="medics.length === 0">
                     <p class="mb-0">
                         No medics with that term
                     </p>
                 </div>
 
 
-                <div class="table-responsive">
+                <div class="table-responsive" *ngIf="medics.length > 0">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Avatar</th>
+                                <th>Photo</th>
                                 <th>Name</th>
                                 <th>Lastname</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Deshmukh</td>
-                                <td>He He</td>
+                            <tr *ngFor="let medic of medics"
+                                class="animated fadeIn"
+                                (click)="openMedic( medic )">
+                                <td>
+                                    <img [src]="medic.img | image:'medics'" class="w100" />
+                                </td>
+                                <td>
+                                    <a [routerLink]="['/dashboard/medic', medic._id]">
+                                        {{ medic.name }}
+                                    </a>
+                                </td>
+                                <td>{{ medic.lastname }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -81,25 +89,28 @@
 
                 <h3>Hospitals</h3>
 
-                <div class="alert alert-info">
+                <div class="alert alert-info animated fadeIn fast" *ngIf="hospitals.length === 0">
                     <p class="mb-0">
                         No users with that term
                     </p>
                 </div>
 
 
-                <div class="table-responsive">
+                <div class="table-responsive" *ngIf="hospitals.length > 0">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Avatar</th>
+                                <th>Photo</th>
                                 <th>Name</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Deshmukh</td>
+                            <tr *ngFor="let hospital of hospitals"
+                                class="animated fadeIn">
+                                <td>
+                                    <img [src]="hospital.img | image:'hospitals'" class="w100" />
+                                </td>
+                                <td>{{ hospital.name }}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -48,6 +48,14 @@ export class SearchService {
 
   }
 
+  globalSearch( term: string ) {
+
+    const url2 = `${ url }/all/${ term }`;
+
+    return this.http.get( url2, this.headers)
+
+  }
+
   search( type: 'users' | 'hospitals' | 'medics', term: string ) {
     const url2 = `${ url }/all/collection/${ type }/${ term }`;
 
