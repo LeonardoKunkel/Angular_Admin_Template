@@ -9,8 +9,9 @@ import { PagesComponent } from './pages.component';
 import { ProgressComponent } from './progress/progress.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { PromesasComponent } from './promesas/promesas.component';
-import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
+import { RxjsComponent } from './rxjs/rxjs.component';
+import { SearchComponent } from './search/search.component';
 
 // Maintenance
 import { UsersComponent } from './maintenance/users/users.component';
@@ -32,6 +33,7 @@ const routes: Routes = [
             { path: 'progress', component: ProgressComponent, data: { titulo: 'ProgressBar' } },
             { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promises' } },
             { path: 'rxjs', component: RxjsComponent, data: { titulo: 'RxJs' } },
+            { path: 'search/:term', component: SearchComponent, data: { titulo: 'Search' } },
 
             // Maintenance
             { path: 'users', component: UsersComponent, data: { titulo: 'App User' } },
