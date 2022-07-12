@@ -25,6 +25,7 @@ export class UserService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('menu');
     this.router.navigateByUrl('/login');
   }
 
@@ -44,6 +45,13 @@ export class UserService {
         'x-token': this.token
       }
     }
+  }
+
+  saveLocalStorage( token: string, menu: any ) {
+
+    localStorage.setItem('token', token);
+    localStorage.setItem('menu', JSON.stringify(menu));
+
   }
 
   tokenValid(): Observable<boolean> {
@@ -66,7 +74,8 @@ export class UserService {
 
         this.user = new User( name, email, '', img, google, role, uid );
         
-        localStorage.setItem('token', data.token);
+        this.saveLocalStorage(data.token, data.menu)
+
         return true
       }),
       catchError( error => of(false) )
@@ -89,8 +98,7 @@ export class UserService {
     return this.http.post(`${ url }/users/create`, formData)
                 .pipe(
                   tap( (data: any) => {
-                    console.log(data);
-                    localStorage.setItem('token', data.token)
+                    this.saveLocalStorage(data.token, data.menu)
                   })
                 )
   }
@@ -99,8 +107,7 @@ export class UserService {
     return this.http.post(`${ url }/login`, formData)
                 .pipe(
                   tap( (data: any) => {
-                    console.log(data);
-                    localStorage.setItem('token', data.token)
+                    this.saveLocalStorage(data.token, data.menu)
                   })
                 )
   }
