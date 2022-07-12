@@ -33,6 +33,10 @@ export class UserService {
     return localStorage.getItem('token') || '';
   }
 
+  get role(): 'ADMIN_ROLE' | 'USER_ROLE' | undefined {
+    return this.user.role
+  }
+
   get uid(): string {
 
     return this.user.uid || '';
